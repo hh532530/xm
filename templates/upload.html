@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}上传头像 - 用户管理系统{% endblock %}
+{% block content %}
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-avatar upload-avatar">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+            </svg>
+        </div>
+        <h2>上传头像</h2>
+        <p class="login-subtitle">选择一张图片作为您的头像</p>
+
+        {% if error %}
+            <div class="error-msg">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" class="form">
+            <div class="file-upload-area">
+                <div class="file-upload-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                    </svg>
+                </div>
+                <p class="file-upload-text">点击或拖拽文件到此区域</p>
+                <p class="file-upload-hint">支持任意文件格式，最大 16MB</p>
+                <input type="file" id="file" name="file" class="file-input-hidden" onchange="updateFileName(this)">
+                <label for="file" class="file-select-btn">选择文件</label>
+                <span class="file-name" id="file-name">未选择文件</span>
+            </div>
+
+            <button type="submit" class="login-btn">上 传</button>
+        </form>
+
+        {% if file_url %}
+            <div class="upload-success">
+                <div class="upload-success-icon">✓</div>
+                <h3>上传成功！</h3>
+                <img src="{{ file_url }}" alt="头像预览" class="upload-preview">
+                <p class="file-url-text">
+                    文件路径：<a href="{{ file_url }}" target="_blank">{{ file_url }}</a>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function updateFileName(input) {
+    var nameSpan = document.getElementById('file-name');
+    if (input.files && input.files.length > 0) {
+        nameSpan.textContent = input.files[0].name;
+        nameSpan.className = 'file-name file-name-selected';
+    } else {
+        nameSpan.textContent = '未选择文件';
+        nameSpan.className = 'file-name';
+    }
+}
+</script>
+{% endblock %}

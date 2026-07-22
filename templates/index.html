@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}首页 - 用户管理系统{% endblock %}
+{% block content %}
+    {% if user %}
+        <div class="card">
+            <h2>欢迎回来，{{ user.username }}！</h2>
+            <ul class="info-list">
+                <li><strong>用户名：</strong>{{ user.username }}</li>
+                <li><strong>邮箱：</strong>{{ user.email }}</li>
+                <li><strong>手机：</strong>{{ user.phone }}</li>
+                <li><strong>余额：</strong>{{ user.balance if user.balance is defined else 'N/A' }}</li>
+            </ul>
+            <a href="/profile?user_id={{ user.id }}" class="btn" style="display: inline-block; margin-top: 20px; background: #722ed1;">个人中心</a>
+            <a href="/logout" class="btn" style="display: inline-block; margin-top: 20px; margin-left: 10px;">退出登录</a>
+            <a href="/upload" class="btn" style="display: inline-block; margin-top: 20px; margin-left: 10px; background: #52c41a;">上传头像</a>
+        </div>
+
+        <!-- 搜索功能 -->
+        <div class="card" style="margin-top: 20px;">
+            <h2>用户搜索</h2>
+            <form method="get" action="/" class="form">
+                <div class="form-group" style="display: flex; gap: 10px; flex-direction: row;">
+                    <input type="text" name="keyword" class="form-input" placeholder="搜索用户名或邮箱..." value="{{ keyword }}" style="flex: 1;">
+                    <button type="submit" class="btn">搜索</button>
+                </div>
+            </form>
+
+            {% if keyword %}
+                <div style="margin-top: 20px;">
+                    <h3>搜索结果：</h3>
+                    {% if results and results|length > 0 %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>邮箱</th>
+                                    <th>手机</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in results %}
+                                <tr>
+                                    <td>{{ r.id }}</td>
+                                    <td>{{ r.username }}</td>
+                                    <td>{{ r.email }}</td>
+                                    <td>{{ r.phone }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p style="color: #999; margin-top: 10px;">无搜索结果</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="card">
+            <h2>请先登录</h2>
+            <p style="margin-bottom: 20px;">您尚未登录，请登录后查看用户信息。</p>
+            <a href="/login" class="btn" style="display: inline-block;">前往登录</a>
+        </div>
+    {% endif %}
+{% endblock %}
