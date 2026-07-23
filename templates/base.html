@@ -11,6 +11,9 @@
         <div class="nav-brand">用户管理系统</div>
         <div class="nav-menu">
             {% if session.get('username') %}
+                {% if session.get('avatar') %}
+                <img src="{{ session['avatar'] }}" alt="头像" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.6);">
+                {% endif %}
                 <span class="nav-link">欢迎，{{ session['username'] }}</span>
                 <a href="/profile?user_id=1" class="nav-link">个人中心</a>
                 <a href="/upload" class="nav-link">上传头像</a>

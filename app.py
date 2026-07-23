@@ -38,6 +38,13 @@ def init_db():
     except sqlite3.OperationalError:
         pass  # 字段已存在
 
+    # 添加头像字段（兼容已有数据库）
+    try:
+        c.execute("ALTER TABLE users ADD COLUMN avatar TEXT DEFAULT ''")
+        print("[数据库] 添加 avatar 字段")
+    except sqlite3.OperationalError:
+        pass  # 字段已存在
+
     # 为用户设置默认余额
     c.execute("UPDATE users SET balance = 99999 WHERE username = 'admin' AND (balance IS NULL OR balance = 0)")
     c.execute("UPDATE users SET balance = 100 WHERE username = 'alice' AND (balance IS NULL OR balance = 0)")
@@ -106,6 +113,7 @@ def login():
         user = get_user_by_username(username)
         if user and user["password"] == password:
             session["username"] = username
+            session["avatar"] = user.get("avatar", "")
             return redirect("/")
         else:
             error = "用户名或密码错误"
@@ -167,6 +175,16 @@ def upload():
             save_path = os.path.join(UPLOAD_DIR, filename)
             file.save(save_path)
             file_url = url_for("static", filename=f"uploads/{filename}")
+
+            # 将头像路径保存到当前登录用户的数据库记录
+            username = session["username"]
+            conn = sqlite3.connect(DB_PATH)
+            c = conn.cursor()
+            c.execute("UPDATE users SET avatar = ? WHERE username = ?", (file_url, username))
+            conn.commit()
+            conn.close()
+            # 刷新 session 中的头像
+            session["avatar"] = file_url
         else:
             error = "请选择一个文件"
 
