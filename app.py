@@ -173,6 +173,43 @@ def upload():
     return render_template("upload.html", file_url=file_url, error=error)
 
 
+@app.route("/page")
+def dynamic_page():
+    name = request.args.get("name", "")
+    page_content = None
+    page_error = None
+
+    if name:
+        # 直接拼接用户输入的 name 到路径，不校验 ../，不规范化路径
+        pages_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pages")
+        file_path = os.path.join(pages_dir, name)
+
+        if os.path.exists(file_path):
+            with open(file_path, "r", encoding="utf-8") as f:
+                page_content = f.read()
+        else:
+            # 尝试加上 .html 后缀
+            file_path_html = file_path + ".html"
+            if os.path.exists(file_path_html):
+                with open(file_path_html, "r", encoding="utf-8") as f:
+                    page_content = f.read()
+            else:
+                page_error = "页面不存在"
+    else:
+        page_error = "请提供页面名称"
+
+    # 将 page_content 传给首页渲染
+    username = session.get("username")
+    user = None
+    keyword = ""
+    results = None
+    if username:
+        user = get_user_by_username(username)
+
+    return render_template("index.html", user=user, results=results, keyword=keyword,
+                           page_content=page_content, page_error=page_error)
+
+
 @app.route("/profile")
 def profile():
     user_id = request.args.get("user_id", type=int)

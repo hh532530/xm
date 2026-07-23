@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>帮助中心</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.8; }
+h1 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 12px; }
+h2 { color: #444; margin-top: 28px; }
+p { margin: 10px 0; }
+code { background: #f0f0f0; padding: 2px 8px; border-radius: 4px; font-size: 0.9em; }
+.help-card { background: #f8f9ff; border-left: 4px solid #667eea; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+ul { padding-left: 20px; }
+li { margin: 6px 0; }
+.back-link { display: inline-block; margin-top: 30px; padding: 10px 24px; background: #667eea; color: #fff; text-decoration: none; border-radius: 8px; }
+.back-link:hover { background: #5a6fd6; }
+</style>
+</head>
+<body>
+<h1>帮助中心</h1>
+
+<h2>关于本系统</h2>
+<p>本系统是一个基于 Flask 框架开发的用户管理平台，提供用户注册、登录、信息查询、头像上传、账户充值等功能。</p>
+
+<h2>功能介绍</h2>
+
+<div class="help-card">
+    <strong>用户注册</strong>
+    <p>在注册页面填写用户名、密码、邮箱和手机号即可创建账号。注册成功后自动跳转到登录页面。</p>
+</div>
+
+<div class="help-card">
+    <strong>登录系统</strong>
+    <p>使用注册的用户名和密码登录。登录后可查看个人信息、搜索用户、上传头像和充值。</p>
+</div>
+
+<div class="help-card">
+    <strong>个人中心</strong>
+    <p>在个人中心页面可以查看您的详细资料，包括用户 ID、用户名、邮箱、手机号和账户余额。</p>
+</div>
+
+<div class="help-card">
+    <strong>账户充值</strong>
+    <p>在个人中心页面底部，输入充值金额并点击充值按钮即可为账户增加余额。充值成功后余额即时更新。</p>
+</div>
+
+<div class="help-card">
+    <strong>用户搜索</strong>
+    <p>在首页搜索框中输入用户名或邮箱关键字，可以搜索系统中的用户信息。</p>
+</div>
+
+<div class="help-card">
+    <strong>头像上传</strong>
+    <p>在头像上传页面选择图片文件，点击上传即可设置个人头像。支持各种文件格式，最大 16MB。</p>
+</div>
+
+<h2>常见问题</h2>
+
+<p><strong>Q: 忘记密码怎么办？</strong></p>
+<p>A: 当前版本暂不支持密码找回功能，请联系管理员处理。</p>
+
+<p><strong>Q: 充值后余额没有更新？</strong></p>
+<p>A: 充值成功后页面会自动跳转到个人中心，余额应即时更新。如果未更新请尝试刷新页面。</p>
+
+<p><strong>Q: 上传头像支持哪些格式？</strong></p>
+<p>A: 系统对上传文件格式没有限制，支持任意文件格式上传。</p>
+
+<a href="/" class="back-link">返回首页</a>
+</body>
+</html>
